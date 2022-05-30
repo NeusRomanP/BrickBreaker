@@ -6,6 +6,7 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext('2d');
 const restart = document.getElementById("restart");
 const game_over = document.getElementById("gameover");
+const you_won = document.getElementById("winner");
 
 let brickRowCount = 3;
 let brickColumnCount = 5;
@@ -71,7 +72,7 @@ function animate(){
     onCollisionWithPlayer();
     onCollisionWithBrick();
     gameOver();
-    //win();
+    win();
 
     requestAnimationFrame(animate);
 }
@@ -111,12 +112,12 @@ function onCollisionWithBrick(){
             let collisionBottom = ball.y + ball.vy -10 < brick.y + brick.height;
             if(collisionTop && collisionBottom && collisionLeft && collisionRight && brick.color!="transparent"){
                 let deviation;
-                let playerCenter = player.width/2;
+                let brickCenter = brick.width/2;
                 //console.log("pos", ball.x - player.x);
-                if(playerCenter > (ball.x - player.x)){
-                    deviation = -((playerCenter - (ball.x - player.x))*(3)/100);
+                if(brickCenter > (ball.x - brick.x)){
+                    deviation = -((brickCenter - (ball.x - brick.x))*(3)/100);
                 }else{
-                    deviation = (((ball.x - player.x) - playerCenter)*(3)/100);
+                    deviation = (((ball.x - brick.x) - brickCenter)*(3)/100);
                 }
                 
                 ball.vy = -ball.vy;
@@ -140,5 +141,23 @@ function gameOver(){
 }
 
 function win(){
-    
+    let winner = true;
+    for(let rows = 0; rows < brickColumnCount; rows++){
+        for(let columns = 0; columns < brickRowCount; columns++){
+            if(bricks[columns][rows].color != "transparent"){
+                winner = false;
+            }
+        }
+    }
+
+    if(winner){
+        you_won.style.display = "block";
+        ball.x = 250;
+        ball.y = 300;
+        ball.vx = 0;
+        ball.vy = 0;
+        player.x = 250;
+    }else{
+        you_won.style.display = "none";
+    }
 }

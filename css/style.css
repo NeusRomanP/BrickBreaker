@@ -25,7 +25,25 @@ h1{
     font-size: 3em;
 }
 
+#winner{
+    display: none;
+    top: 200px;
+    text-align: center;
+    width: 100%;
+    position: absolute;
+    font-size: 3em;
+}
+
 .relative{
     position: relative;
+    margin: auto;
+}
+
+#restart{
+    width: fit-content;
+}
+
+.restart-container{
+    width: fit-content;
     margin: auto;
 }
